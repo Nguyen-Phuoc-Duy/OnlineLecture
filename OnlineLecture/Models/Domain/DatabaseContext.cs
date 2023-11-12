@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using OnlineLecture.Models.DTO;
 
 namespace OnlineLecture.Models.Domain
 {
@@ -9,5 +10,8 @@ namespace OnlineLecture.Models.Domain
         {
             
         }
+
+        public DbSet<SubjectModel> SubjectModel { get; set; }
+
     }
 }

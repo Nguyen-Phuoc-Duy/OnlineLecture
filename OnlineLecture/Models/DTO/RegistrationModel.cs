@@ -4,6 +4,9 @@ namespace OnlineLecture.Models.DTO
 {
     public class RegistrationModel
     {
+
+        public int IdUser { get; set; }
+
         [Required]
         public string Name { get; set; }
         [Required]
