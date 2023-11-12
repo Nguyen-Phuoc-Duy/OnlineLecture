@@ -1,3 +1,4 @@
+using Dotnet6MvcLogin.Repositories.Implementation;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using OnlineLecture.Models.Domain;

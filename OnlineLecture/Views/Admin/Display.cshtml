@@ -6,22 +6,24 @@
 }
 
 <div class="tbl-container">
-    <h2>User List</h2>
+    <h2>UserList</h2>
 
     <table>
         <tr>
             <th>Name</th>
+            <th>UserName</th>
+            <th>Email</th>
             <th>Action</th>
         </tr>
         @foreach (var item in Model)
         {
             <tr>
-                <td>@item.UserName</td>
                 <td>@item.Name</td>
+                <td>@item.UserName</td>
                 <td>@item.Email</td>
                 <td>
-                    <a asp-action="Edit" asp-controller="Admin" class="btn btn-default"><i class="fa fa-edit"></i> Edit</a>
-                    <a onclick="return window.confirm('Are you sure?')" href="/Genre/Delete?id=@item.Id" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                    <a href="/Admin/Edit?id=@item.Id" class="btn btn-default"><i class="fa fa-edit"></i></a>
+                    <a onclick="return window.confirm('Are you sure?')" href="/Admin/Delete?id=@item.Id" class="btn btn-danger"><i class="fa fa-trash"></i></a>
                 </td>
             </tr>
         }

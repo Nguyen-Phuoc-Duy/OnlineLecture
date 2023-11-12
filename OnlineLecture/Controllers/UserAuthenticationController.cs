@@ -1,11 +1,10 @@
-﻿using OnlineLecture.Models.DTO;
-using OnlineLecture.Repositories.Abstract;
+﻿
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnlineLecture.Models.DTO;
 using OnlineLecture.Repositories.Abstract;
 
-namespace OnlineLecture.Controllers
+namespace Dotnet6MvcLogin.Controllers
 {
     public class UserAuthenticationController : Controller
     {
@@ -60,35 +59,20 @@ namespace OnlineLecture.Controllers
             await this._authService.LogoutAsync();
             return RedirectToAction(nameof(Login));
         }
-
-        public async Task<IActionResult> Reg()
+        [AllowAnonymous]
+        public async Task<IActionResult> RegisterAdmin()
         {
-            var model = new RegistrationModel
+            RegistrationModel model = new RegistrationModel
             {
-                Username = "admin1",
-                Email = "admin1@gmail.com",
-                Name = "duy1",
+                Username = "admin",
+                Email = "admin@gmail.com",
+                Name = "Admin",
                 Password = "Admin@123"
             };
             model.Role = "admin";
             var result = await this._authService.RegisterAsync(model);
             return Ok(result);
         }
-
-        //[AllowAnonymous]
-        //public async Task<IActionResult> RegisterAdmin()
-        //{
-        //    RegistrationModel model = new RegistrationModel
-        //    {
-        //        Username = "admin",
-        //        Email = "admin@gmail.com",
-        //        Name = "duy",
-        //        Password = "Admin@123"
-        //    };
-        //    model.Role = "admin";
-        //    var result = await this._authService.RegisterAsync(model);
-        //    return Ok(result);
-        //}
 
         //[Authorize]
         //public IActionResult ChangePassword()

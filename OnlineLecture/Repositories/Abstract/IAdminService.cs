@@ -6,9 +6,10 @@ namespace OnlineLecture.Repositories.Abstract
 {
     public interface IAdminService
     {
-        Task<bool> Update(ApplicationUser model);
-        Task<ApplicationUser> GetById(Guid id);
-        bool Delete(int id);
+        //Task<bool> Update(Guid id, UserUpdateRequest request);
+        ApplicationUser GetById(Guid id);
+        bool Delete(Guid id);
         IQueryable<ApplicationUser> List();
+        bool Update(ApplicationUser model);
     }
 }
