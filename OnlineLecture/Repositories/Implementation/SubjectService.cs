@@ -17,6 +17,9 @@ namespace OnlineLecture.Repositories.Implementation
         {
             try
             {
+                if (model.Description == null)
+                    model.Description = "";
+
                 context.SubjectModel.Add(model);
                 context.SaveChanges();
                 return true;
@@ -32,9 +35,9 @@ namespace OnlineLecture.Repositories.Implementation
             try
             {
                 var data = this.FindById(idSubject);
-                if (data != null)
+                if (data == null)
                     return false;
-                
+
                 context.SubjectModel.Remove(data);
                 context.SaveChanges();
                 return true;
@@ -47,7 +50,7 @@ namespace OnlineLecture.Repositories.Implementation
 
         public SubjectModel FindById(int id)
         {
-           return context.SubjectModel.Find(id);
+            return context.SubjectModel.Find(id);
         }
 
         IEnumerable<SubjectModel> ISubjectService.GetAll()
