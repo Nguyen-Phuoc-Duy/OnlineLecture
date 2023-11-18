@@ -14,6 +14,11 @@ namespace OnlineLecture.Controllers
         {
             this._adminService = adminService;
         }
+
+        public IActionResult Display()
+        {
+            return View();
+        }
         public IActionResult ViewAllUsers()
         {
             var data = this._adminService.List().ToList();

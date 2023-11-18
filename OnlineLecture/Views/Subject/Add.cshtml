@@ -1,0 +1,34 @@
+﻿@model OnlineLecture.Models.DTO.SubjectModel
+@{
+
+}
+
+<div class="container pt-5">
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Add Subject</h3>
+            <form asp-action="Add" method="post">
+                <div class="form-group">
+                    <label asp-for="NameSubject">Name Subject*</label>
+                    <input type="text" class="form-control" asp-for="NameSubject" />
+                    <span asp-validation-for="NameSubject" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Description">Description</label>
+                    <input type="text" class="form-control" asp-for="Description" />
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                @if (TempData["msg"] != null)
+                {
+                    <div class="form-group">
+                        @TempData["msg"]
+                    </div>
+                }
+                <div class="form-group">
+                    <button type="submit" class="btn btn-dark">Save</button>
+                    <a href="/Subject/GetAll" class="btn btn-primary">List Subject</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

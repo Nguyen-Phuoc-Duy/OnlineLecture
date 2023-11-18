@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlineLecture.Models.Domain;
 
@@ -11,9 +12,11 @@ using OnlineLecture.Models.Domain;
 namespace OnlineLecture.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20231113160215_update-subjectmodel")]
+    partial class updatesubjectmodel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -155,30 +158,6 @@ namespace OnlineLecture.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("OnlineLecture.Models.DTO.LectureModel", b =>
-                {
-                    b.Property<int>("IdLecture")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdLecture"));
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FileLecture")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NameLecture")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("IdLecture");
-
-                    b.ToTable("LectureModel");
-                });
-
             modelBuilder.Entity("OnlineLecture.Models.DTO.SubjectModel", b =>
                 {
                     b.Property<int>("IdSubject")
@@ -189,6 +168,9 @@ namespace OnlineLecture.Migrations
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("IdUser")
+                        .HasColumnType("int");
 
                     b.Property<string>("NameSubject")
                         .IsRequired()
