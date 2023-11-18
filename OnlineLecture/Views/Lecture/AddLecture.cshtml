@@ -1,0 +1,25 @@
+﻿@model OnlineLecture.Models.DTO.LectureModel
+@{
+
+}
+
+<form asp-action="AddLecture" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="mb-3">
+        <label>Tên bài học</label>
+        <input asp-for="NameLecture" class="form-control" required />
+        
+        <span asp-validation-for="NameLecture" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label>Mô tả</label>
+        <input asp-for="Description" class="form-control" required />
+     
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label>Tệp bài giảng</label>
+        <input type="file" name="mFile" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Create</button>
+</form>

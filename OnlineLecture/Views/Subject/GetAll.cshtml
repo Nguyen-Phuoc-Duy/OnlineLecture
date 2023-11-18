@@ -29,7 +29,8 @@
                             <td>@item.Description</td>
                             <td>
                                 <a class="btn btn-success" href="/Subject/Update?id=@item.IdSubject">Update</a> |
-                                <a class="btn btn-danger" onclick="return window.confirm('Are you sure?')" href="/Subject/Delete?id=@item.IdSubject">Delete</a>
+                                <a class="btn btn-danger" onclick="return window.confirm('Are you sure?')" href="/Subject/Delete?id=@item.IdSubject">Delete</a> |
+                                <a class="btn btn btn-warning" href="/Lecture/AddLecture">Add lecture</a>
                             </td>
                         </tr>
                     }
