@@ -1,3 +1,4 @@
+using Dotnet6MvcLogin.Repositories.Implementation;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using OnlineLecture.Models.Domain;
@@ -17,8 +18,10 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddDefaultTokenProviders();
 builder.Services.ConfigureApplicationCookie(options => options.LoginPath = "/UserAuthentication/Login");
 
-//add services to container
+//add DI
 builder.Services.AddScoped<IUserAuthenticationService, UserAuthenticationService>();
+builder.Services.AddScoped<IAdminService, AdminService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

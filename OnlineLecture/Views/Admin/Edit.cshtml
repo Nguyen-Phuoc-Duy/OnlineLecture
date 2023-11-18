@@ -1,0 +1,46 @@
+﻿@model OnlineLecture.Models.Domain.ApplicationUser
+
+@{
+}
+
+<form class="w-40" asp-action="Update" method="post">
+    <h2 class="pb-10">Update User</h2>
+    @* <input 
+         type="hidden" 
+        class="input" asp-for="Id"> *@
+
+    <div class="input-container">
+        <label asp-for="UserName" class="w-40">UserName</label>
+        <input type="text" class="input" asp-for="UserName">
+    </div>
+    <div class="message-box pd-x-28 error">
+        <span asp-validation-for="UserName"> </span>
+    </div>
+
+    <div class="input-container">
+        <label asp-for="Name" class="w-40">Name</label>
+        <input type="text" class="input" asp-for="Name">
+    </div>
+    <div class="message-box pd-x-28 error">
+        <span asp-validation-for="Name"> </span>
+    </div>
+
+    <div class="input-container">
+        <label asp-for="Email" class="w-40">Email</label>
+        <input type="text" class="input" asp-for="Email">
+    </div>
+    <div class="message-box pd-x-28 error">
+        <span asp-validation-for="Email"> </span>
+    </div>
+    @if (TempData["msg"] != null)
+    {
+        <div class="alert mb-1">
+            @TempData["msg"]
+        </div>
+    }
+
+    <div class="input-container">
+        <button class="btn btn-default" type="submit">Save</button>
+        <a class="btn btn-sec" href="/Admin/Display">All records</a>
+    </div>
+</form>
