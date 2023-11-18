@@ -88,9 +88,12 @@ namespace Dotnet6MvcLogin.Repositories.Implementation
             {
                 var userRoles = await userManager.GetRolesAsync(user);
                 var authClaims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.Name, user.UserName),
-                };
+        {
+            new Claim(ClaimTypes.Name, user.UserName),
+        };
+
+                // Lấy ID của người dùng và thêm vào danh sách claims
+                authClaims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id));
 
                 foreach (var userRole in userRoles)
                 {
@@ -112,6 +115,7 @@ namespace Dotnet6MvcLogin.Repositories.Implementation
 
             return status;
         }
+
 
         public async Task LogoutAsync()
         {

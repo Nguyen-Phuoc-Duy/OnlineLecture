@@ -10,6 +10,6 @@ namespace OnlineLecture.Repositories.Abstract
         ApplicationUser GetById(Guid id);
         bool Delete(Guid id);
         IQueryable<ApplicationUser> List();
-        bool Update(ApplicationUser model);
+        Task<bool> UpdateUser(string idString, ApplicationUser model);
     }
 }

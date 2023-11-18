@@ -14,26 +14,29 @@ namespace OnlineLecture.Controllers
         {
             this._adminService = adminService;
         }
-        public IActionResult Display()
+        public IActionResult ViewAllUsers()
         {
             var data = this._adminService.List().ToList();
             return View(data);
         }
-        public IActionResult Edit(Guid id)
+        public IActionResult Update(Guid id)
         {
             var data = _adminService.GetById(id);
             return View(data);
         }
         [HttpPost]
-        public IActionResult Update(ApplicationUser model)
+        public async Task<IActionResult> Update(ApplicationUser model)
         {
+           
             if (!ModelState.IsValid)
                 return View(model);
-            var result = _adminService.Update(model);
+
+            var result = await _adminService.UpdateUser(model.Id.ToString(), model);
+
             if (result)
             {
-                TempData["msg"] = "Added Successfully";
-                return RedirectToAction(nameof(Display));
+                TempData["msg"] = "Updated Successfully";
+                return RedirectToAction(nameof(ViewAllUsers));
             }
             else
             {
@@ -41,23 +44,6 @@ namespace OnlineLecture.Controllers
                 return View(model);
             }
         }
-        //[HttpPost]
-        //public async  Task<IActionResult> Update(Guid id,UserUpdateRequest model)
-        //{
-        //    if (!ModelState.IsValid)
-        //        return View(model);
-        //    var result = await _adminService.Update(id,model);
-        //    if (result)
-        //    {
-        //        TempData["msg"] = "Added Successfully";
-        //        return RedirectToAction(nameof(Display));
-        //    }
-        //    else
-        //    {
-        //        TempData["msg"] = "Error on server side";
-        //        return View(model);
-        //    }
-        //}
 
     }
 }
