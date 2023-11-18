@@ -1,4 +1,16 @@
 ﻿@{
     string username = User.Identity.Name;
+
 }
 welcome @username
+
+@ViewData["UserId"]
+<p>User ID: @ViewData["UserId"]</p>
+<p>Username: @ViewData["Username"]</p>
+<p>Email: @ViewData["Email"]</p>
+<tr>
+    <td>
+        <a href="/Admin/Update?id=@ViewData["UserId"]" class="btn btn-default"><i class="fa fa-edit"></i></a>
+        @* <a onclick="return window.confirm('Are you sure?')" href="/Admin/Delete?id=@item.Id" class="btn btn-danger"><i class="fa fa-trash"></i></a> *@
+    </td>
+</tr>

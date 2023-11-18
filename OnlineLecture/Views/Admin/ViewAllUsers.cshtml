@@ -1,0 +1,35 @@
+﻿﻿
+
+@model IEnumerable<OnlineLecture.Models.Domain.ApplicationUser>
+
+@{
+}
+
+<div class="tbl-container">
+    <h2>UserList</h2>
+
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>UserName</th>
+            <th>Email</th>
+            <th>Action</th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.UserName</td>
+                <td>@item.Email</td>
+                <td>
+                    <a href="/Admin/Update?id=@item.Id" class="btn btn-default"><i class="fa fa-edit"></i></a>
+                    <a onclick="return window.confirm('Are you sure?')" href="/Admin/Delete?id=@item.Id" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                </td>
+            </tr>
+        }
+
+    </table>
+    <div class="input-container">
+        <a href="/Genre/Add" class="btn btn-sec">Back</a>
+    </div>
+</div>

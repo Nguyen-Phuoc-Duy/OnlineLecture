@@ -60,18 +60,41 @@ namespace OnlineLecture.Repositories.Implementation
             return data;
         }
 
-        public bool Update(ApplicationUser model)
+
+        public async Task<bool> UpdateUser(string idString, ApplicationUser model)
         {
             try
             {
-                ctx.ApplicationUser.Update(model);
-                ctx.SaveChanges();
-                return true;
+                var user = await ctx.ApplicationUser.FindAsync(idString);
+                if (user != null)
+                {
+                    var updatedProperties = ctx.Entry(user).Properties.Where(
+                        p => p.Metadata.Name != "Id" 
+                        && p.Metadata.Name != "PasswordHash" 
+                        //&& p.Metadata.Name != "UserName"
+                        && p.Metadata.Name != "NormalizedUserName"
+                        && p.Metadata.Name != "NormalizedEmail"
+                        ).Select(p => p.Metadata.Name);
+                    foreach (var property in updatedProperties)
+                    {
+                        
+                        ctx.Entry(user).Property(property).CurrentValue = ctx.Entry(model).Property(property).CurrentValue;
+
+                    }
+
+                    await ctx.SaveChangesAsync();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
             catch (Exception ex)
             {
                 return false;
             }
+            throw new NotImplementedException();
         }
     }
 }
