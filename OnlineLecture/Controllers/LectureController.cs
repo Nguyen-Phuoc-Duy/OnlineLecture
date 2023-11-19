@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using OnlineLecture.Models.DTO;
 using OnlineLecture.Repositories.Abstract;
 
@@ -7,32 +8,45 @@ namespace OnlineLecture.Controllers
     public class LectureController : Controller
     {
         private readonly ILectureService _lectureService;
+        private readonly ISubjectService _subjectService;
 
-        public LectureController(ILectureService service)
+        public LectureController(ILectureService service, ISubjectService subjectService)
         {
             this._lectureService = service;
+            this._subjectService = subjectService;
         }
 
         public IActionResult AddLecture()
         {
-            return View();
+            var model = new LectureModel();
+            model.SubjectList = _subjectService.GetAll().Select(a => new SelectListItem
+            {
+                Text = a.NameSubject,
+                Value = a.IdSubject.ToString()
+            });
+            return View(model);
         }
 
         [HttpPost]
         public async Task<IActionResult> AddLecture(LectureModel model, IFormFile mFile)
         {
+            model.SubjectList = _subjectService.GetAll().Select(a => new SelectListItem
+            {
+                Text = a.NameSubject,
+                Value = a.IdSubject.ToString()
+            });
             bool res = await _lectureService.AddLecture(model, mFile);
             if (res)
             {
-                return View(model);
+               /* return View(model);*/
                 TempData["msg"] = "Added successfully";
                 return RedirectToAction(nameof(AddLecture));
             }
             else
             {
-                TempData["msg"] = "Error has occured on server side";
-                return View(model);
-            }    
+            TempData["msg"] = "Error has occured on server side";
+            return View(model);   
+        }
         }
         public IActionResult Update(int id)
         {
@@ -41,20 +55,20 @@ namespace OnlineLecture.Controllers
         }
 
         [HttpPost]
-        public IActionResult Update(LectureModel model)
+        public async Task<IActionResult> Update(LectureModel model, IFormFile mFile)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-            var res = _lectureService.UpdateLecture(model);
+            bool res = await _lectureService.UpdateLecture(model, mFile);
             if (res)
             {
+                /* return View(model);*/
                 TempData["msg"] = "Updated successfully";
-                return RedirectToAction(nameof(AddLecture));
+                return RedirectToAction(nameof(GetAll));
             }
-            TempData["msg"] = "Error has occured on server side";
-            return View(model);
+            else
+            {
+                TempData["msg"] = "Error has occured on server side";
+                return View(model);
+            }
         }
 
 
