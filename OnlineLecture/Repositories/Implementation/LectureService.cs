@@ -130,10 +130,19 @@ namespace OnlineLecture.Repositories.Implementation
 
         public LectureListVm FilterList()
         {
-            var list = context.LectureModel.AsQueryable();
+            var list = context.LectureModel.ToList();
+            foreach (var lt in list)
+            {
+                var subjects = (from subject in context.SubjectModel
+                                join sl in context.LectureModel
+                                on subject.IdSubject equals sl.IdSubject
+                                select subject.NameSubject).ToList();
+                var subjectName = string.Join(", ", subjects);
+                lt.SubjectNames = subjectName;
+            }
             var data = new LectureListVm
             {
-                LectureList = list
+                LectureList = list.AsQueryable()
             };
             return data;
 

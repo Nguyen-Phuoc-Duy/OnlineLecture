@@ -20,6 +20,11 @@ namespace OnlineLecture.Models.DTO
         [NotMapped]
         [Required]
         public List<int> Subjects { get; set; }
-        public IEnumerable<SelectListItem> SubjectList;
+
+        [NotMapped]
+        public IEnumerable<SelectListItem> SubjectList { get; set; }
+
+        [NotMapped]
+        public string SubjectNames { get; set; }
     }
 }

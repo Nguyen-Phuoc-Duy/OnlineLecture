@@ -10,19 +10,18 @@
     <div class="mb-3">
         <label>Name lecture</label>
         <input asp-for="NameLecture" class="form-control" required />
-        
+
         <span asp-validation-for="NameLecture" class="text-danger"></span>
     </div>
     <div class="mb-3">
-        <label for="Subjects" class="form-label">Subject</label>
-        <select asp-items="Model.SubjectList" class="form-select" asp-for="Subjects" multiple>
-            <option value="">--Select--</option>
-        </select>
+        <label for="subjectDropdown">Select Subject:</label>
+        <select asp-for="Subjects" class="form-control" asp-items="ViewBag.SubjectList"></select>
     </div>
+   
     <div class="mb-3">
         <label>Description</label>
         <input asp-for="Description" class="form-control" required />
-     
+
         <span asp-validation-for="Description" class="text-danger"></span>
     </div>
     <div class="mb-3">

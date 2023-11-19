@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using OnlineLecture.Models.DTO;
 using OnlineLecture.Repositories.Abstract;
 
@@ -18,27 +19,19 @@ namespace OnlineLecture.Controllers
 
         public IActionResult AddLecture()
         {
-            var model = new LectureModel();
-            model.SubjectList = _subjectService.GetAll().Select(a => new SelectListItem
-            {
-                Text = a.NameSubject,
-                Value = a.IdSubject.ToString()
-            });
-            return View(model);
+            
+            ViewData["SubjectList"] = new SelectList(_subjectService.GetAll(), "IdSubject", "NameSubject");
+            return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> AddLecture(LectureModel model, IFormFile mFile)
         {
-            model.SubjectList = _subjectService.GetAll().Select(a => new SelectListItem
-            {
-                Text = a.NameSubject,
-                Value = a.IdSubject.ToString()
-            });
+           
             bool res = await _lectureService.AddLecture(model, mFile);
             if (res)
             {
-               /* return View(model);*/
+               
                 TempData["msg"] = "Added successfully";
                 return RedirectToAction(nameof(AddLecture));
             }
@@ -81,6 +74,12 @@ namespace OnlineLecture.Controllers
         public IActionResult GetAll()
         {
             var data = _lectureService.GetAll();
+            return View(data);
+        }
+
+        public IActionResult FilterList()
+        {
+            var data= this._lectureService.FilterList();
             return View(data);
         }
     }
