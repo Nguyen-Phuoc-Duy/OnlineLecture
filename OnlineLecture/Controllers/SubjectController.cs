@@ -52,7 +52,7 @@ namespace OnlineLecture.Controllers
             if (res)
             {
                 TempData["msg"] = "Updated successfully";
-                return RedirectToAction(nameof(Add));
+                return RedirectToAction(nameof(GetAll));
             }
             TempData["msg"] = "Error has occured on server side";
             return View(model);

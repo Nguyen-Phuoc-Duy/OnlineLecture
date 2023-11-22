@@ -3,7 +3,6 @@ using OnlineLecture.Models.Domain;
 using OnlineLecture.Models.DTO;
 using OnlineLecture.Repositories.Abstract;
 
-
 namespace OnlineLecture.Repositories.Implementation
 {
     public class LectureService : ILectureService
@@ -44,6 +43,16 @@ namespace OnlineLecture.Repositories.Implementation
 
                 context.LectureModel.Add(model);
                 context.SaveChanges();
+                foreach(int subjectId in model.Subjects)
+                {
+                    var lectureSubject = new SubjectLectureModel
+                    {
+                        IdLecture = model.IdLecture,
+                        IdSubject = subjectId
+                    };
+                    context.SubjectLectureModel.Add(lectureSubject);
+                }
+                context.SaveChanges();
                 return true;
             }
             catch (Exception ex)
@@ -52,10 +61,30 @@ namespace OnlineLecture.Repositories.Implementation
             }
         }
 
-        public bool UpdateLecture(LectureModel model)
+        public async Task<bool> UpdateLecture(LectureModel model, IFormFile mFile)
         {
             try
             {
+                if (model.Description == null)
+                    model.Description = "";
+
+                if (mFile != null)
+                {
+                    string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "lecture");
+                    string uniqueFileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(mFile.FileName);
+                    string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await mFile.CopyToAsync(fileStream);
+                    }
+
+                    model.FileLecture = "/lecture/" + uniqueFileName;
+                }
+                else
+                {
+                    return false;
+                }
                 context.LectureModel.Update(model);
                 context.SaveChanges();
                 return true;
@@ -97,6 +126,26 @@ namespace OnlineLecture.Repositories.Implementation
         public IEnumerable<LectureModel> GetAll()
         {
             return context.LectureModel.ToList();
+        }
+
+        public LectureListVm FilterList()
+        {
+            var list = context.LectureModel.ToList();
+            foreach (var lt in list)
+            {
+                var subjects = (from subject in context.SubjectModel
+                                join sl in context.LectureModel
+                                on subject.IdSubject equals sl.IdSubject
+                                select subject.NameSubject).ToList();
+                var subjectName = string.Join(", ", subjects);
+                lt.SubjectNames = subjectName;
+            }
+            var data = new LectureListVm
+            {
+                LectureList = list.AsQueryable()
+            };
+            return data;
+
         }
     }
 }

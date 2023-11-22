@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlineLecture.Models.Domain;
 
@@ -11,9 +12,11 @@ using OnlineLecture.Models.Domain;
 namespace OnlineLecture.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20231119070152_update-lecture")]
+    partial class updatelecture
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -180,25 +183,6 @@ namespace OnlineLecture.Migrations
                     b.HasKey("IdLecture");
 
                     b.ToTable("LectureModel");
-                });
-
-            modelBuilder.Entity("OnlineLecture.Models.DTO.SubjectLectureModel", b =>
-                {
-                    b.Property<int>("IdSubjectLecture")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdSubjectLecture"));
-
-                    b.Property<int>("IdLecture")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IdSubject")
-                        .HasColumnType("int");
-
-                    b.HasKey("IdSubjectLecture");
-
-                    b.ToTable("SubjectLectureModel");
                 });
 
             modelBuilder.Entity("OnlineLecture.Models.DTO.SubjectModel", b =>

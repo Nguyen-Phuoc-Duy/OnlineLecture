@@ -7,13 +7,15 @@ namespace OnlineLecture.Repositories.Abstract
     {
         Task<bool> AddLecture(LectureModel model, IFormFile mFile);
 
-        bool UpdateLecture(LectureModel model);
+        Task<bool> UpdateLecture(LectureModel model, IFormFile mFile);
 
         bool DeleteLecture(int idLecture);
 
         LectureModel FindById(int id);
 
         IEnumerable<LectureModel> GetAll();
+
+        LectureListVm FilterList();
 
     }
 }
