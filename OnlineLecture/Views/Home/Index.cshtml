@@ -1,8 +1,47 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
-}
+    string username = User.Identity.Name;
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+}
+<main role="main">
+
+    <section class="jumbotron text-center">
+        <div class="container">
+            <h1 class="jumbotron-heading">Welcome @username to Online Lecture!</h1>
+            <p class="lead text-muted">You’ll never be brave if you do not get hurt. You’ll never learn if you do not make mistakes.</p>
+            <div class="d-flex h-100 align-items-end">
+                <form class="search-form" asp-action="Index" asp-controller="Home">
+                    <input type="text" value="@ViewBag.SearchString" name="searchString" placeholder="Input name subject">
+                    <button type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <div class="album py-5 bg-light">
+        <div class="container">
+
+            <div class="row">
+                @foreach (var item in Model)
+                {
+
+                    <div class="col-md-4">
+                        <div class="card mb-4 box-shadow">
+                            <img class="card-img-top" src="/images/default.png" alt="Image defaut subject" />
+                            <div class="card-body">
+                                <p class="card-text">@item.NameSubject</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <button type="button" onclick="registerClass(@item.IdSubject)" class="btn btn-sm btn-outline-secondary">Register the class</button>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+
+</main>

@@ -7,12 +7,21 @@
 
 <form asp-action="Update" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" class="input" asp-for="IdLecture" />
+    <input type="hidden" class="input" asp-for="FileLecture" />
     <div class="mb-3">
         <label>Name lecture</label>
         <input asp-for="NameLecture" class="form-control" required />
 
         <span asp-validation-for="NameLecture" class="text-danger"></span>
     </div>
+    <div class="mb-3">
+        <label for="subjectDropdown">Select Subject:</label>
+        <select asp-for="Subjects" class="form-control input" asp-items="Model.MultiSubjectList" multiple>
+
+        </select>
+    </div>
+
     <div class="mb-3">
         <label>Description</label>
         <input asp-for="Description" class="form-control" required />

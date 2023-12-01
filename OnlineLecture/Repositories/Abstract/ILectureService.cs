@@ -17,5 +17,7 @@ namespace OnlineLecture.Repositories.Abstract
 
         LectureListVm FilterList();
 
+        List<int> GetSubjectByLectureId(int idLecture);
+
     }
 }

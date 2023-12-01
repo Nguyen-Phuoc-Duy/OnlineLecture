@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlineLecture.Models.Domain;
 
@@ -11,9 +12,11 @@ using OnlineLecture.Models.Domain;
 namespace OnlineLecture.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20231130140658_Selection")]
+    partial class Selection
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -219,26 +222,6 @@ namespace OnlineLecture.Migrations
                     b.HasKey("IdSubject");
 
                     b.ToTable("SubjectModel");
-                });
-
-            modelBuilder.Entity("OnlineLecture.Models.DTO.UserSubjectModel", b =>
-                {
-                    b.Property<int>("IdUserSubject")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdUserSubject"));
-
-                    b.Property<int>("IdSubject")
-                        .HasColumnType("int");
-
-                    b.Property<string>("IdUser")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("IdUserSubject");
-
-                    b.ToTable("UserSubjectModel");
                 });
 
             modelBuilder.Entity("OnlineLecture.Models.Domain.ApplicationUser", b =>
