@@ -43,7 +43,7 @@ namespace OnlineLecture.Repositories.Implementation
 
                 context.LectureModel.Add(model);
                 context.SaveChanges();
-                foreach(int subjectId in model.Subjects)
+                foreach (int subjectId in model.Subjects)
                 {
                     var lectureSubject = new SubjectLectureModel
                     {
@@ -108,6 +108,11 @@ namespace OnlineLecture.Repositories.Implementation
                 if (data == null)
                     return false;
 
+                var removeSubject = context.SubjectLectureModel.Where(x => x.IdSubject == data.IdSubject);
+                foreach (var item in removeSubject)
+                {
+                    context.SubjectLectureModel.Remove(item);
+                }
                 context.LectureModel.Remove(data);
                 context.SaveChanges();
                 return true;
@@ -136,8 +141,9 @@ namespace OnlineLecture.Repositories.Implementation
                 var subjects = (from subject in context.SubjectModel
                                 join sl in context.LectureModel
                                 on subject.IdSubject equals sl.IdSubject
+                                where sl.IdLecture == lt.IdLecture
                                 select subject.NameSubject).ToList();
-                var subjectName = string.Join(", ", subjects);
+                var subjectName = string.Join(",", subjects);
                 lt.SubjectNames = subjectName;
             }
             var data = new LectureListVm
@@ -146,6 +152,12 @@ namespace OnlineLecture.Repositories.Implementation
             };
             return data;
 
+        }
+
+        public List<int> GetSubjectByLectureId(int idLecture)
+        {
+            var subjectIds = context.SubjectLectureModel.Where(a => a.IdLecture == idLecture).Select(a => a.IdSubject).ToList();
+            return subjectIds;
         }
     }
 }

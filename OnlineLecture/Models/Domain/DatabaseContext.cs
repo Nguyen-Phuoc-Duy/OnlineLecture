@@ -15,6 +15,7 @@ namespace OnlineLecture.Models.Domain
         public DbSet<SubjectModel> SubjectModel { get; set; }
         public DbSet<LectureModel> LectureModel { get; set; }
         public DbSet<SubjectLectureModel> SubjectLectureModel { get; set; }
+        public DbSet<UserSubjectModel> UserSubjectModel { get; set; }
       
 
     }

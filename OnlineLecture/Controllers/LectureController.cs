@@ -19,7 +19,7 @@ namespace OnlineLecture.Controllers
 
         public IActionResult AddLecture()
         {
-            
+
             ViewData["SubjectList"] = new SelectList(_subjectService.GetAll(), "IdSubject", "NameSubject");
             return View();
         }
@@ -27,23 +27,27 @@ namespace OnlineLecture.Controllers
         [HttpPost]
         public async Task<IActionResult> AddLecture(LectureModel model, IFormFile mFile)
         {
-           
+
             bool res = await _lectureService.AddLecture(model, mFile);
             if (res)
             {
-               
+
                 TempData["msg"] = "Added successfully";
                 return RedirectToAction(nameof(AddLecture));
             }
             else
             {
-            TempData["msg"] = "Error has occured on server side";
-            return View(model);   
-        }
+                TempData["msg"] = "Error has occured on server side";
+                return View(model);
+            }
         }
         public IActionResult Update(int id)
         {
             var record = _lectureService.FindById(id);
+            var selectedSubjects = _lectureService.GetSubjectByLectureId(record.IdLecture);
+            MultiSelectList multiSelectList = new MultiSelectList(_subjectService.GetAll(), "IdSubject", "SubjectNames", selectedSubjects);
+            //ViewData["SubjectList"] = new SelectList(_subjectService.GetAll(), "IdSubject", "NameSubject");
+            record.MultiSubjectList = multiSelectList;
             return View(record);
         }
 
@@ -55,7 +59,7 @@ namespace OnlineLecture.Controllers
             {
                 /* return View(model);*/
                 TempData["msg"] = "Updated successfully";
-                return RedirectToAction(nameof(GetAll));
+                return RedirectToAction(nameof(FilterList));
             }
             else
             {
@@ -79,7 +83,7 @@ namespace OnlineLecture.Controllers
 
         public IActionResult FilterList()
         {
-            var data= this._lectureService.FilterList();
+            var data = this._lectureService.FilterList();
             return View(data);
         }
     }

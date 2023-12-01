@@ -13,6 +13,7 @@ builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(b
 // For Identity  
 builder.Services.AddScoped<ISubjectService, SubjectService>();
 builder.Services.AddScoped<ILectureService, LectureService>();
+builder.Services.AddScoped<IUserSubject, UserSubjectService>();
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<DatabaseContext>()
     .AddDefaultTokenProviders();
