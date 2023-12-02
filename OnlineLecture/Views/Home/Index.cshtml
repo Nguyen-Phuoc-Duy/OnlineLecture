@@ -24,6 +24,12 @@
     <div class="album py-5 bg-light">
         <div class="container">
             <div class="row">
+                @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+                {
+                    <div class="alert alert-danger text-center">
+                        @ViewBag.ErrorMessage
+                    </div>
+                }
                 @foreach (var item in Model)
                 {
                     <div class="col-md-4">
@@ -35,7 +41,7 @@
                                 <p class="card-text">@item.NameSubject</p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
-                                        <button type="button" onclick="registerClass(@item.IdSubject)" class="btn btn-sm btn-outline-secondary">Register the class</button>
+                                        <a href="https://localhost:44347/Home/AddTheClass?IdSubject=@item.IdSubject" class="btn btn-success">Register the class</a>
                                     </div>
                                 </div>
                             </div>
