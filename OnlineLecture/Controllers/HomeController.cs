@@ -24,7 +24,7 @@ namespace OnlineLecture.Controllers
         private readonly DatabaseContext _context;
         private readonly IUserSubject _userSubjectService;
 
-        public HomeController(ISubjectService service, UserManager<ApplicationUser> userManager, DatabaseContext context,IUserSubject userSubjectService)
+        public HomeController(ISubjectService service, UserManager<ApplicationUser> userManager, DatabaseContext context, IUserSubject userSubjectService)
         {
             this._subjectService = service;
             this.userManager = userManager;
@@ -34,7 +34,7 @@ namespace OnlineLecture.Controllers
         public IActionResult Index(string searchString)
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-           
+
 
             if (User.Identity.IsAuthenticated && !string.IsNullOrEmpty(userId))
             {
@@ -44,7 +44,7 @@ namespace OnlineLecture.Controllers
 
                 if (user != null)
                 {
-              
+
                     ViewData["UserId"] = user.Id;
                     ViewData["Username"] = user.UserName;
                     ViewData["Email"] = user.Email;
@@ -84,7 +84,7 @@ namespace OnlineLecture.Controllers
             return View();
         }
 
-       
+
         public IActionResult AddTheClass(int IdSubject)
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -106,7 +106,7 @@ namespace OnlineLecture.Controllers
                     {
                         return RedirectToAction("Index");
                     }
-                   
+
 
                 }
             }
@@ -114,6 +114,75 @@ namespace OnlineLecture.Controllers
 
         }
 
+        public IActionResult SubjectRegisted()
+        {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+
+            if (User.Identity.IsAuthenticated && !string.IsNullOrEmpty(userId))
+            {
+
+                var user = userManager.FindByIdAsync(userId).Result;
+
+
+                if (user != null)
+                {
+                    var query = $"select SubjectModel.* " +
+                        $"from UserSubjectModel left join SubjectModel " +
+                        $"on UserSubjectModel.IdSubject = SubjectModel.IdSubject " +
+                        $"where UserSubjectModel.IdUser = '{user.Id}'";
+                    var data = _context.SubjectModel.FromSqlRaw(query).ToList();
+                    if (data.IsNullOrEmpty())
+                    {
+
+                    }
+                    else
+                    {
+                        return View(data);
+                    }
+
+                }
+
+            }
+            return View();
+        }
+
+
+        public IActionResult DeleteUserSubject(int IdSubject)
+        {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+
+            if (User.Identity.IsAuthenticated && !string.IsNullOrEmpty(userId))
+            {
+
+                var user = userManager.FindByIdAsync(userId).Result;
+
+
+                if (user != null)
+                {
+                    var query = $"select UserSubjectModel.* " +
+               $"from SubjectModel right join UserSubjectModel " +
+               $"on SubjectModel.IdSubject = UserSubjectModel.IdSubject " +
+               $"where UserSubjectModel.IdUser = '{user.Id}' " +
+               $"and UserSubjectModel.IdSubject = '{IdSubject}'";
+                    var data = _context.UserSubjectModel.FromSqlRaw(query).ToList();
+                    if (data.IsNullOrEmpty())
+                    {
+
+                    }
+                    else
+                    {
+                        var IdUserSubject = data[0].IdUserSubject;
+                        _userSubjectService.DeleteUserSubject(IdUserSubject);
+                        return RedirectToAction(nameof(SubjectRegisted));
+                    }
+
+                }
+
+            }
+            return View();
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
