@@ -51,31 +51,33 @@ namespace OnlineLecture.Controllers
                     ViewData["Name"] = user.Name;
 
                 }
-                if (string.IsNullOrEmpty(searchString))
-                {
-                    var query = $"SELECT SubjectModel.* " +
+                var query = $"SELECT SubjectModel.* " +
                         $"FROM SubjectModel " +
                         $"LEFT JOIN UserSubjectModel ON SubjectModel.IdSubject = UserSubjectModel.IdSubject " +
                         $"AND UserSubjectModel.IdUser = '{user.Id}'" +
                         $"WHERE UserSubjectModel.IdSubject IS NULL;";
-                    var data = _context.SubjectModel.FromSqlRaw(query).ToList();
+                var data = _context.SubjectModel.FromSqlRaw(query).ToList();
+                if (string.IsNullOrEmpty(searchString))
+                {
                     return View(data);
                 }
                 else
                 {
-                    IQueryable<SubjectModel> data = _context.SubjectModel;
-
-                    if (!string.IsNullOrEmpty(searchString))
+                    var dataSearch = new List<SubjectModel>();
+                    foreach(var item in data)
                     {
-                        data = data.Where(p => p.NameSubject.Contains(searchString));
+                        if (item != null && item.NameSubject.Contains(searchString))
+                        {
+                            dataSearch.Add(item);
+                        }
                     }
                     ViewBag.SearchString = searchString;
-                    if (data.IsNullOrEmpty())
+                    if (dataSearch.IsNullOrEmpty())
                     {
                         ViewBag.ErrorMessage = "No results for this research!";
 
                     }
-                    return View(data);
+                    return View(dataSearch);
 
                 }
             }
