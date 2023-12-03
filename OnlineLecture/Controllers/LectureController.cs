@@ -1,11 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using OnlineLecture.Models.Domain;
 using OnlineLecture.Models.DTO;
 using OnlineLecture.Repositories.Abstract;
+using System.Security.Claims;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace OnlineLecture.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class LectureController : Controller
     {
         private readonly ILectureService _lectureService;
