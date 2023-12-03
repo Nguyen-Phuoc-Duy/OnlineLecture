@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using OnlineLecture.Models.DTO;
 using OnlineLecture.Repositories.Abstract;
 
 namespace OnlineLecture.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class SubjectController : Controller
     {
 

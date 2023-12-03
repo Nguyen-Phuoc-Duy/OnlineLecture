@@ -59,6 +59,11 @@ namespace OnlineLecture.Controllers
                 var data = _context.SubjectModel.FromSqlRaw(query).ToList();
                 if (string.IsNullOrEmpty(searchString))
                 {
+                    if (data.IsNullOrEmpty())
+                    {
+                        ViewBag.ErrorMessage = "No results for this research!";
+
+                    }
                     return View(data);
                 }
                 else
