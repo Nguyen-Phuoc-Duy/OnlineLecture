@@ -86,5 +86,13 @@ namespace OnlineLecture.Controllers
             var data = this._lectureService.FilterList();
             return View(data);
         }
+
+        public IActionResult DetailSubject()
+        {
+            var data = this._lectureService.FilterList();
+            return View(data);
+        }
+
+
     }
 }

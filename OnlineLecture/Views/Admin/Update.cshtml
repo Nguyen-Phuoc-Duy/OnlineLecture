@@ -9,13 +9,13 @@
     type="hidden"
     class="input" asp-for="Id">
 
-    <div class="input-container">
-        <label asp-for="UserName" class="w-40">UserName</label>
-        <input type="text" class="input" asp-for="UserName">
-    </div>
-    <div class="message-box pd-x-28 error">
+    @* <div class="input-container">
+        <label asp-for="UserName" class="w-40">UserName</label> *@
+        <input type="hidden" class="input" asp-for="UserName">
+   @*  </div> *@
+    @* <div class="message-box pd-x-28 error">
         <span asp-validation-for="UserName"> </span>
-    </div>
+    </div> *@
 
     <div class="input-container">
         <label asp-for="Name" class="w-40">Name</label>
