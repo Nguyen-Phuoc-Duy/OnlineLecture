@@ -27,10 +27,10 @@
                             <td>@item.NameSubject</td>
                             <td>@item.Description</td>
                             <td>
-                                <div class="btn-group" role="group">
-                                    <a class="btn btn-success mr-2" href="/Subject/Update?id=@item.IdSubject">Update</a>
-                                    <a class="btn btn-danger mr-2" onclick="return window.confirm('Are you sure?')" href="/Subject/Delete?id=@item.IdSubject">Delete</a>
-                                    <a class="btn btn-warning" href="/Lecture/AddLecture">Add Lecture</a>
+                                <div class="btn-group d-flex justify-content-center">
+                                    <a class="btn btn-success mr-2" href="/Subject/Update?id=@item.IdSubject">Update</a> 
+                                    <a class="btn btn-danger" onclick="return window.confirm('Are you sure?')" href="/Subject/Delete?id=@item.IdSubject">Delete</a>
+                                    
                                 </div>
                             </td>
                         </tr>

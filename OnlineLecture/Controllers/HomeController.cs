@@ -136,7 +136,7 @@ namespace OnlineLecture.Controllers
                     var data = _context.SubjectModel.FromSqlRaw(query).ToList();
                     if (data.IsNullOrEmpty())
                     {
-
+                        ViewBag.ErrorMessage = "No results for this research!";
                     }
                     else
                     {
@@ -186,7 +186,29 @@ namespace OnlineLecture.Controllers
             return View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult DetailsSubjectLecture(int IdSubject, string NameSubject)
+        {
+            var query = $"SELECT LectureModel.* "+
+                $"FROM LectureModel " +
+                $"INNER JOIN SubjectLectureModel ON LectureModel.IdLecture = SubjectLectureModel.IdLecture " +
+                $"INNER JOIN SubjectModel ON SubjectLectureModel.IdSubject = SubjectModel.IdSubject " +
+                $"WHERE SubjectModel.IdSubject = '{IdSubject}'";
+            var data = _context.LectureModel.FromSqlRaw(query).ToList();
+            ViewData["NameSubject"] = NameSubject;
+            if (data.IsNullOrEmpty())
+            {
+                ViewBag.ErrorMessage = "No results!";
+            }
+            else
+            {
+                return View(data);
+            }
+            return View();
+        }
+
+
+
+            [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
