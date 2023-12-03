@@ -25,15 +25,18 @@ namespace OnlineLecture.Controllers
 
         public IActionResult AddLecture()
         {
-
-            ViewData["SubjectList"] = new SelectList(_subjectService.GetAll(), "IdSubject", "NameSubject");
-            return View();
+            var model = new LectureModel();
+            model.SubjectList = _subjectService.GetAll().Select(a =>
+            new SelectListItem { Text = a.NameSubject, Value = a.IdSubject.ToString() });
+            /*ViewData["SubjectList"] = new SelectList(_subjectService.GetAll(), "IdSubject", "NameSubject");*/
+            return View(model);
         }
 
         [HttpPost]
         public async Task<IActionResult> AddLecture(LectureModel model, IFormFile mFile)
         {
-
+            model.SubjectList = _subjectService.GetAll().Select(a =>
+           new SelectListItem { Text = a.NameSubject, Value = a.IdSubject.ToString() });
             bool res = await _lectureService.AddLecture(model, mFile);
             if (res)
             {
@@ -50,6 +53,8 @@ namespace OnlineLecture.Controllers
         public IActionResult Update(int id)
         {
             var record = _lectureService.FindById(id);
+            record.SubjectList = _subjectService.GetAll().Select(a =>
+           new SelectListItem { Text = a.NameSubject, Value = a.IdSubject.ToString() });
             var selectedSubjects = _lectureService.GetSubjectByLectureId(record.IdLecture);
             MultiSelectList multiSelectList = new MultiSelectList(_subjectService.GetAll(), "IdSubject", "SubjectNames", selectedSubjects);
             //ViewData["SubjectList"] = new SelectList(_subjectService.GetAll(), "IdSubject", "NameSubject");
@@ -60,6 +65,8 @@ namespace OnlineLecture.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(LectureModel model, IFormFile mFile)
         {
+            model.SubjectList = _subjectService.GetAll().Select(a =>
+          new SelectListItem { Text = a.NameSubject, Value = a.IdSubject.ToString() });
             bool res = await _lectureService.UpdateLecture(model, mFile);
             if (res)
             {

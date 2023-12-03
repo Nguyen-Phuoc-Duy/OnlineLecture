@@ -14,8 +14,10 @@
         <span asp-validation-for="NameLecture" class="text-danger"></span>
     </div>
     <div class="mb-3">
-        <label for="subjectDropdown">Select Subject:</label>
-        <select asp-for="Subjects" class="form-control" asp-items="ViewBag.SubjectList"></select>
+        <label asp-for="Subjects">Select Subject:</label>
+        <select asp-for="Subjects" class="form-control" asp-items="Model.SubjectList">
+            <option value="">--select--</option>
+        </select>
     </div>
    
     <div class="mb-3">
