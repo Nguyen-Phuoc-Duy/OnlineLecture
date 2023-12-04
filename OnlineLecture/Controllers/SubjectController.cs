@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using OnlineLecture.Models.DTO;
 using OnlineLecture.Repositories.Abstract;
 
 namespace OnlineLecture.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class SubjectController : Controller
     {
 
@@ -52,7 +54,7 @@ namespace OnlineLecture.Controllers
             if (res)
             {
                 TempData["msg"] = "Updated successfully";
-                return RedirectToAction(nameof(Add));
+                return RedirectToAction(nameof(GetAll));
             }
             TempData["msg"] = "Error has occured on server side";
             return View(model);

@@ -1,0 +1,51 @@
+﻿
+<main role="main">
+
+    <section class="jumbotron text-center">
+        <div class="container">
+            <h1 class="jumbotron-heading">Welcome to class @ViewData["NameSubject"]!</h1>
+            <p class="lead text-muted">Below is all of classes for you to learn!</p>
+        </div>
+    </section>
+
+    <div class="album py-5 bg-light">
+        <div class="container">
+            <div class="row">
+                @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+                {
+                    <div class="alert alert-danger text-center">
+                        @ViewBag.ErrorMessage
+                    </div>
+                }
+                else
+                {
+                    @foreach (var item in Model)
+                    {
+                        <div class="col-md-4">
+                            <div class="card mb-4 box-shadow">
+                                <!-- Thiết lập kích thước ảnh là 80x80 và margin là 12px -->
+                                <img class="card-img-top" src="https://png.pngtree.com/png-vector/20230318/ourmid/pngtree-the-books-clipart-vector-png-image_6653533.png" alt="Image default subject" style="width: auto; height: 180px; margin: 12px;" />
+
+                                <div class="card-body">
+                                    <p class="card-text">@item.NameLecture</p>
+                                </div>
+                                <div class="card-body">
+                                    @if (!string.IsNullOrEmpty(item.FileLecture))
+                                    {
+                                        <a href="@item.FileLecture" target="_blank">File lecture @item.NameLecture</a>
+                                    }
+                                    else
+                                    {
+                                        <span>No file available</span>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+               
+            </div>
+        </div>
+    </div>
+</main>
+

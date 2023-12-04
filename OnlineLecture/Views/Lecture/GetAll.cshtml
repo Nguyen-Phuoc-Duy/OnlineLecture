@@ -1,0 +1,13 @@
+﻿@model IEnumerable<OnlineLecture.Models.DTO.LectureModel>
+@{
+
+}
+
+<div class="container mt-0" id="display-list-container">
+    <h3>Subject: </h3>
+    <h4>List Lecture</h4>
+    <a class="btn btn-success mb-3" asp-controller="Lecture" asp-action="AddLecture">Add lecture</a>
+    <div id="result" class="border" style="height: 550px; overflow:scroll">
+    </div>
+
+</div>

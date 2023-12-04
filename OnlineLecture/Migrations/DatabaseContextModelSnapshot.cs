@@ -170,6 +170,9 @@ namespace OnlineLecture.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("IdSubject")
+                        .HasColumnType("int");
+
                     b.Property<string>("NameLecture")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -177,6 +180,25 @@ namespace OnlineLecture.Migrations
                     b.HasKey("IdLecture");
 
                     b.ToTable("LectureModel");
+                });
+
+            modelBuilder.Entity("OnlineLecture.Models.DTO.SubjectLectureModel", b =>
+                {
+                    b.Property<int>("IdSubjectLecture")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdSubjectLecture"));
+
+                    b.Property<int>("IdLecture")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdSubject")
+                        .HasColumnType("int");
+
+                    b.HasKey("IdSubjectLecture");
+
+                    b.ToTable("SubjectLectureModel");
                 });
 
             modelBuilder.Entity("OnlineLecture.Models.DTO.SubjectModel", b =>
@@ -197,6 +219,26 @@ namespace OnlineLecture.Migrations
                     b.HasKey("IdSubject");
 
                     b.ToTable("SubjectModel");
+                });
+
+            modelBuilder.Entity("OnlineLecture.Models.DTO.UserSubjectModel", b =>
+                {
+                    b.Property<int>("IdUserSubject")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdUserSubject"));
+
+                    b.Property<int>("IdSubject")
+                        .HasColumnType("int");
+
+                    b.Property<string>("IdUser")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("IdUserSubject");
+
+                    b.ToTable("UserSubjectModel");
                 });
 
             modelBuilder.Entity("OnlineLecture.Models.Domain.ApplicationUser", b =>

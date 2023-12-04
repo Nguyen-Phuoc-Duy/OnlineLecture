@@ -1,0 +1,43 @@
+﻿@model OnlineLecture.Models.DTO.LectureModel
+@{
+
+}
+
+<h3>Update Lecture</h3>
+
+<form asp-action="Update" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" class="input" asp-for="IdLecture" />
+    <input type="hidden" asp-for="FileLecture" />
+    <div class="mb-3">
+        <label>Name lecture</label>
+        <input asp-for="NameLecture" class="form-control" required />
+
+        <span asp-validation-for="NameLecture" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Subjects">Select Subject:</label>
+        <select asp-for="Subjects" class="form-control" asp-items="Model.SubjectList">
+            <option value="">--select--</option>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label>Description</label>
+        <input asp-for="Description" class="form-control" required />
+
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label>File</label>
+        <input type="file" name="mFile" class="form-control" />
+    </div>
+    @if (TempData["msg"] != null)
+    {
+        <div class="mb-3">
+            @TempData["msg"]
+        </div>
+    }
+    <button type="submit" class="btn btn-success">Update</button>
+    <a href="/Lecture/GetAll" class="btn btn-primary">List Lecture</a>
+</form>

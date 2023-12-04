@@ -1,0 +1,34 @@
+﻿@{
+    string username = User.Identity.Name;
+
+}
+@model OnlineLecture.Models.Domain.ApplicationUser
+
+<h3>Update User Infomation</h3>
+
+<form  asp-controller="ChangeInfo" asp-action="UpdateUserInfo" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" class="input" asp-for="@ViewData["UserId"]">
+    <input type="hidden" class="input" asp-for="@ViewData["Username"]">
+    <div class="mb-3">
+        <label>Name User</label>
+        <input asp-for="@ViewData["Name"]" class="form-control" required />
+
+        <span asp-validation-for="@ViewData["Name"]" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label>Email</label>
+        <input asp-for="@ViewData["Email"]" class="form-control" required />
+
+        <span asp-validation-for="@ViewData["Email"]" class="text-danger"></span>
+    </div>
+    @if (TempData["msg"] != null)
+    {
+        <div class="alert alert-success mb-1">
+            @TempData["msg"]
+        </div>
+    }
+    <button type="submit" class="btn btn-success">Update</button>
+
+</form>

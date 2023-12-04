@@ -14,6 +14,9 @@ namespace OnlineLecture.Models.Domain
         public DbSet<ApplicationUser> ApplicationUser { get; set; }
         public DbSet<SubjectModel> SubjectModel { get; set; }
         public DbSet<LectureModel> LectureModel { get; set; }
+        public DbSet<SubjectLectureModel> SubjectLectureModel { get; set; }
+        public DbSet<UserSubjectModel> UserSubjectModel { get; set; }
+      
 
     }
 }

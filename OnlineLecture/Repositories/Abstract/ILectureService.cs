@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
 using OnlineLecture.Models.DTO;
 
 namespace OnlineLecture.Repositories.Abstract
@@ -7,7 +8,7 @@ namespace OnlineLecture.Repositories.Abstract
     {
         Task<bool> AddLecture(LectureModel model, IFormFile mFile);
 
-        bool UpdateLecture(LectureModel model);
+        Task<bool> UpdateLecture(LectureModel model, IFormFile mFile);
 
         bool DeleteLecture(int idLecture);
 
@@ -15,5 +16,12 @@ namespace OnlineLecture.Repositories.Abstract
 
         IEnumerable<LectureModel> GetAll();
 
+        LectureListVm FilterList();
+
+        List<int> GetSubjectByLectureId(int idLecture);
+
+        Task<LectureModel?> GetByIdAsync(int id);
+
+        Task<List<LectureModel>> GetAllAsync();
     }
 }
