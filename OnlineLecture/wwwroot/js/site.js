@@ -343,7 +343,7 @@ var searchPost = (name) => {
 
             posts.forEach((post, index) => {
                 postListHtml += `
-                        <div class="col-md-4">
+                    <div class="col-md-4">
                         <div class="card mb-4 box-shadow">
                             <!-- Thiết lập kích thước ảnh là 80x80 và margin là 12px -->
                             <img class="card-img-top" src="https://png.pngtree.com/png-vector/20230318/ourmid/pngtree-the-books-clipart-vector-png-image_6653533.png" alt="Image default subject" style="width: auto; height: 180px; margin: 12px;" />
