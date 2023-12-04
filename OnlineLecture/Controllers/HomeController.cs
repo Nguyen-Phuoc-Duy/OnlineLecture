@@ -31,7 +31,13 @@ namespace OnlineLecture.Controllers
             this._context = context;
             this._userSubjectService = userSubjectService;
         }
-        public IActionResult Index(string searchString)
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+
+        public IActionResult IndexSubjectSearch(string searchString)
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
@@ -57,38 +63,71 @@ namespace OnlineLecture.Controllers
                         $"AND UserSubjectModel.IdUser = '{user.Id}'" +
                         $"WHERE UserSubjectModel.IdSubject IS NULL;";
                 var data = _context.SubjectModel.FromSqlRaw(query).ToList();
-                if (string.IsNullOrEmpty(searchString))
+                var dataSearch = new List<SubjectModel>();
+                foreach (var item in data)
                 {
-                    if (data.IsNullOrEmpty())
+                    if (item != null && item.NameSubject.Contains(searchString))
                     {
-                        ViewBag.ErrorMessage = "No results for this research!";
-
+                        dataSearch.Add(item);
                     }
-                    return View(data);
                 }
-                else
+                ViewBag.SearchString = searchString;
+                if (dataSearch.IsNullOrEmpty())
                 {
-                    var dataSearch = new List<SubjectModel>();
-                    foreach(var item in data)
-                    {
-                        if (item != null && item.NameSubject.Contains(searchString))
-                        {
-                            dataSearch.Add(item);
-                        }
-                    }
-                    ViewBag.SearchString = searchString;
-                    if (dataSearch.IsNullOrEmpty())
-                    {
-                        ViewBag.ErrorMessage = "No results for this research!";
-
-                    }
-                    return View(dataSearch);
+                    ViewBag.ErrorMessage = "No results for this research!";
 
                 }
+                return Ok(dataSearch);
+
+
             }
 
+            return Ok();
+        }
 
-            return View();
+        public IActionResult IndexSubject()
+        {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+
+            if (User.Identity.IsAuthenticated && !string.IsNullOrEmpty(userId))
+            {
+
+                var user = userManager.FindByIdAsync(userId).Result;
+
+
+                if (user != null)
+                {
+
+                    ViewData["UserId"] = user.Id;
+                    ViewData["Username"] = user.UserName;
+                    ViewData["Email"] = user.Email;
+                    ViewData["Name"] = user.Name;
+
+                }
+                var query = $"SELECT SubjectModel.* " +
+                     $"FROM SubjectModel " +
+                     $"LEFT JOIN UserSubjectModel ON SubjectModel.IdSubject = UserSubjectModel.IdSubject " +
+                     $"AND UserSubjectModel.IdUser = '{user.Id}'" +
+                     $"WHERE UserSubjectModel.IdSubject IS NULL;";
+                var data = _context.SubjectModel.FromSqlRaw(query).ToList();
+                var dataSearch = new List<SubjectModel>();
+                foreach (var item in data)
+                {
+                    if (item != null)
+                    {
+                        dataSearch.Add(item);
+                    }
+                }
+                if (dataSearch.IsNullOrEmpty())
+                {
+                    ViewBag.ErrorMessage = "No results for this research!";
+
+                }
+                return Ok(dataSearch);
+
+            }
+            return Ok();
         }
 
 
@@ -193,7 +232,7 @@ namespace OnlineLecture.Controllers
 
         public IActionResult DetailsSubjectLecture(int IdSubject, string NameSubject)
         {
-            var query = $"SELECT LectureModel.* "+
+            var query = $"SELECT LectureModel.* " +
                 $"FROM LectureModel " +
                 $"INNER JOIN SubjectLectureModel ON LectureModel.IdLecture = SubjectLectureModel.IdLecture " +
                 $"INNER JOIN SubjectModel ON SubjectLectureModel.IdSubject = SubjectModel.IdSubject " +
@@ -213,7 +252,7 @@ namespace OnlineLecture.Controllers
 
 
 
-            [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });

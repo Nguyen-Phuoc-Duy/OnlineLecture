@@ -1,4 +1,7 @@
-﻿using OnlineLecture.Models.Domain;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
+using OnlineLecture.Models.Domain;
 using OnlineLecture.Models.DTO;
 using OnlineLecture.Repositories.Abstract;
 
@@ -70,6 +73,11 @@ namespace OnlineLecture.Repositories.Implementation
             {
                 return false;
             }
+        }
+
+        public async Task<List<SubjectModel>> SearchByNameAjax(string name)
+        {
+            return await context.SubjectModel.Where(p => EF.Functions.Like(p.NameSubject, $"%{name}%")).ToListAsync();
         }
     }
 }
