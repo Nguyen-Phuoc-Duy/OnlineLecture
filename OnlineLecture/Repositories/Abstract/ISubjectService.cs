@@ -1,4 +1,6 @@
-﻿using OnlineLecture.Models.DTO;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
+using OnlineLecture.Models.DTO;
 
 namespace OnlineLecture.Repositories.Abstract
 {
@@ -13,6 +15,7 @@ namespace OnlineLecture.Repositories.Abstract
         SubjectModel FindById(int id);
 
         IEnumerable<SubjectModel> GetAll();
+        Task<List<SubjectModel>> SearchByNameAjax(string name);
 
     }
 }
