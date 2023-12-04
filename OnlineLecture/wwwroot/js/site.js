@@ -311,7 +311,7 @@ var handleLoadHome = () => {
                                 <p class="card-text">${post.nameSubject}</p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
-                                        <a href="" class="btn btn-success">Register the class</a>
+                                        <a href="/Home/AddTheClass?idSubject=${post.idSubject}" asp-for="Home" asp-action="AddTheClass" class="btn btn-success">Register the class</a>
                                     </div>
                                 </div>
                             </div>
