@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using OnlineLecture.Models.Domain;
@@ -169,6 +170,8 @@ namespace OnlineLecture.Repositories.Implementation
 
         public async Task<List<LectureModel>> GetAllAsync()
         {
+           /* model.SubjectList = _subjectService.GetAll().Select(a =>
+          new SelectListItem { Text = a.NameSubject, Value = a.IdSubject.ToString() });*/
             return await context.LectureModel.ToListAsync();
         }
 

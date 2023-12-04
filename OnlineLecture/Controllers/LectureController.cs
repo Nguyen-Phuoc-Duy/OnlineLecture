@@ -50,35 +50,24 @@ namespace OnlineLecture.Controllers
                 return View(model);
             }
         }
-        public IActionResult Update(int id)
-        {
-            var record = _lectureService.FindById(id);
-            record.SubjectList = _subjectService.GetAll().Select(a =>
-           new SelectListItem { Text = a.NameSubject, Value = a.IdSubject.ToString() });
-            var selectedSubjects = _lectureService.GetSubjectByLectureId(record.IdLecture);
-            MultiSelectList multiSelectList = new MultiSelectList(_subjectService.GetAll(), "IdSubject", "SubjectNames", selectedSubjects);
-            //ViewData["SubjectList"] = new SelectList(_subjectService.GetAll(), "IdSubject", "NameSubject");
-            record.MultiSubjectList = multiSelectList;
-            return View(record);
-        }
+        /* public IActionResult Update(int id)
+         {
+             var record = _lectureService.FindById(id);
+             record.SubjectList = _subjectService.GetAll().Select(a =>
+            new SelectListItem { Text = a.NameSubject, Value = a.IdSubject.ToString() });
+             var selectedSubjects = _lectureService.GetSubjectByLectureId(record.IdLecture);
+             MultiSelectList multiSelectList = new MultiSelectList(_subjectService.GetAll(), "IdSubject", "SubjectNames", selectedSubjects);
+             //ViewData["SubjectList"] = new SelectList(_subjectService.GetAll(), "IdSubject", "NameSubject");
+             record.MultiSubjectList = multiSelectList;
+             return Ok(record);
+         }*/
 
         [HttpPost]
         public async Task<IActionResult> Update(LectureModel model, IFormFile mFile)
         {
-            model.SubjectList = _subjectService.GetAll().Select(a =>
-          new SelectListItem { Text = a.NameSubject, Value = a.IdSubject.ToString() });
             bool res = await _lectureService.UpdateLecture(model, mFile);
-            if (res)
-            {
-                /* return View(model);*/
-                TempData["msg"] = "Updated successfully";
-                return RedirectToAction(nameof(FilterList));
-            }
-            else
-            {
-                TempData["msg"] = "Error has occured on server side";
-                return View(model);
-            }
+
+            return Ok(res);
         }
 
 
@@ -111,6 +100,15 @@ namespace OnlineLecture.Controllers
             if (!ModelState.IsValid) { return View(); }
 
             var data = await _lectureService.GetAllAsync();
+            return Ok(data);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetLectureById(int idLecture)
+        {
+            if (!ModelState.IsValid) { return View(); }
+
+            var data = await _lectureService.GetByIdAsync(idLecture);
             return Ok(data);
         }
 

@@ -70,41 +70,42 @@ var handleUpdate = () => {
     const btnUpdateConfirm = document.querySelector(".btn-update-confirm");
     const overlay = document.querySelector(".overlay");
     const btnClose = document.querySelector(".btn-huy");
-    var content = document.querySelector(".input-content");
+    var nameLecture = document.querySelector(".input-content");
     var description = document.querySelector(".input-description");
-    var postImage = document.querySelector(".input-image");
-    var postDate = document.querySelector(".input-date");
+    var fileLecture = document.querySelector(".input-image");
+   /* var postDate = document.querySelector(".input-date");*/
 
     btnUpdates.forEach((item) => {
         item.onclick = () => {
             updateModal.classList.add("show");
             overlay.classList.add("show");
             var postId = item.getAttribute("data-post-id");
+            console.log(postId, 'update.........')
             try {
                 var xhr = new XMLHttpRequest();
-                xhr.open("GET", `/Admin/GetById/${postId}`, true);
+                xhr.open("GET", `/Lecture/GetLectureById?idLecture=${postId}`, true);
                 xhr.setRequestHeader("Content-Type", "application/json");
                 xhr.onreadystatechange = () => {
                     if (xhr.readyState === XMLHttpRequest.DONE) {
                         if (xhr.readyState === 4 && xhr.status === 200) {
                             const res = JSON.parse(xhr.responseText);
-                            content.value = res.content;
+                            console.log(res)
+                            nameLecture.value = res.nameLecture;
                             description.value = res.description;
-                            postDate.value = res.postDate;
-                            console.log(res.postId);
+                            console.log(res.postId, 'GetLectureById.....');
 
                             btnUpdateConfirm.addEventListener("click", () => {
                                 try {
                                     var formData = new FormData();
 
                                     formData.append("postId", res.postId);
-                                    formData.append("content", content.value);
+                                    formData.append("nameLecture", nameLecture.value);
                                     formData.append("description", description.value);
-                                    formData.append("imageFile", postImage.files[0]);
-                                    formData.append("postDate", postDate.value);
+                                    formData.append("fileLecture", fileLecture.files[0]);
+                            
 
                                     $.ajax({
-                                        url: "/Admin/UpdatePost/",
+                                        url: "/Lecture/Update/",
                                         type: "PUT",
                                         data: formData,
                                         processData: false,
@@ -185,7 +186,7 @@ var handleLoad = () => {
                                 ${post.description} 
                             </td>
                             <td>
-                                <a style="height:60px;width:80px;" href="${post.fileLecture}" >${post.nameLecture}</a>
+                                <a href="${post.fileLecture}" >File ${post.nameLecture}</a>
                             </td>
                             <td>
                                 <div class="btn-group d-flex justify-content-center">
@@ -226,7 +227,7 @@ var handleLoad = () => {
                                       <div class="modal-body">
                                           <form>
                                               <div class="mb-3">
-                                                  <label for="recipient-name" class="col-form-label">Content</label>
+                                                  <label for="recipient-name" class="col-form-label">Name Lecture</label>
                                                   <input type="text" class="form-control input-content">
                                               </div>
                                               <div class="mb-3">
@@ -234,13 +235,10 @@ var handleLoad = () => {
                                                   <input type="text" class="form-control input-description">
                                               </div>
                                               <div class="mb-3">
-                                                  <label for="message-text" class="col-form-label">Image</label>
+                                                  <label for="message-text" class="col-form-label">File</label>
                                                   <input type="file" class="form-control input-image">
                                               </div>
-                                              <div class="mb-3">
-                                                  <label for="message-text" class="col-form-label">Date</label>
-                                                  <input type="text" class="form-control input-date">
-                                              </div>
+                                           
                                                
                                           </form>
                                       </div>
