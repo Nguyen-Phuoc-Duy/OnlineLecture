@@ -27,3 +27,8 @@ body {
 main {
     flex: 1;
 }
+
+
+.show {
+    display: block;
+}
