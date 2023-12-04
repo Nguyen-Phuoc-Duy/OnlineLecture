@@ -8,7 +8,7 @@
 <form asp-action="Update" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <input type="hidden" class="input" asp-for="IdLecture" />
-    <input type="file" asp-for="FileLecture" />
+    <input type="hidden" asp-for="FileLecture" />
     <div class="mb-3">
         <label>Name lecture</label>
         <input asp-for="NameLecture" class="form-control" required />
