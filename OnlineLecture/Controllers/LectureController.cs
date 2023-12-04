@@ -85,13 +85,13 @@ namespace OnlineLecture.Controllers
         public IActionResult Delete(int id)
         {
             var res = _lectureService.DeleteLecture(id);
-            return RedirectToAction("GetAll");
+            return Ok(res);
         }
 
         public IActionResult GetAll()
         {
-            var data = _lectureService.GetAll();
-            return View(data);
+            /*var data = _lectureService.GetAll();*/
+            return View();
         }
 
         public IActionResult FilterList()
@@ -104,6 +104,14 @@ namespace OnlineLecture.Controllers
         {
             var data = this._lectureService.FilterList();
             return View(data);
+        }
+
+        public async Task<IActionResult> GetAllLecture()
+        {
+            if (!ModelState.IsValid) { return View(); }
+
+            var data = await _lectureService.GetAllAsync();
+            return Ok(data);
         }
 
 

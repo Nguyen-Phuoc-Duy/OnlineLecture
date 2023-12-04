@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using OnlineLecture.Models.Domain;
 using OnlineLecture.Models.DTO;
 using OnlineLecture.Repositories.Abstract;
@@ -159,5 +161,16 @@ namespace OnlineLecture.Repositories.Implementation
             var subjectIds = context.SubjectLectureModel.Where(a => a.IdLecture == idLecture).Select(a => a.IdSubject).ToList();
             return subjectIds;
         }
+
+        public async Task<LectureModel?> GetByIdAsync(int id)
+        {
+            return await context.LectureModel.FirstOrDefaultAsync(a => a.IdLecture == id);
+        }
+
+        public async Task<List<LectureModel>> GetAllAsync()
+        {
+            return await context.LectureModel.ToListAsync();
+        }
+
     }
 }

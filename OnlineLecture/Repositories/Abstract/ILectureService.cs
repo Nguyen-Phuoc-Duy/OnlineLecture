@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
 using OnlineLecture.Models.DTO;
 
 namespace OnlineLecture.Repositories.Abstract
@@ -19,5 +20,8 @@ namespace OnlineLecture.Repositories.Abstract
 
         List<int> GetSubjectByLectureId(int idLecture);
 
+        Task<LectureModel?> GetByIdAsync(int id);
+
+        Task<List<LectureModel>> GetAllAsync();
     }
 }
