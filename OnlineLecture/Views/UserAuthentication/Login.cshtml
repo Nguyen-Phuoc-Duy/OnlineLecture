@@ -17,7 +17,7 @@ form {
   border: 3px solid #f1f1f1;
   width:60%;
   margin:auto;
-  margin-top:10%;
+  margin-top:5%;
 }
 
 input[type=text], input[type=password] {
@@ -30,7 +30,7 @@ input[type=text], input[type=password] {
 }
 
 button {
-  background-color: lightgreen;
+            background-color: #198754;
   color: white;
   padding: 14px 20px;
   margin: 8px 0;
@@ -39,6 +39,15 @@ button {
   width: 100%;
 }
 
+        .btn-signup{
+            background-color: #0d6efd;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            cursor: pointer;
+            width: 100% !important;
+        }
 .container {
   padding: 16px;
 }
@@ -51,13 +60,17 @@ button {
 .err{
     color:red;
 }
+.onlec {
+            display: flex;
+            justify-content: center;
+}
 </style>
  
 </head>
 <body>
-	
+    
 <form asp-action="Login" method="post">
-  
+        <h1 class="onlec">Online Lecture</h1>
   <div class="container">
     <label asp-for="Username"><b>Username</b></label>
     <input type="text" asp-for="Username" placeholder="Enter Username">
@@ -65,11 +78,7 @@ button {
             <span class="err" asp-validation-for="Username"></span>
             </div>
 
-            @* <label asp-for="Name"><b>Name</b></label>
-            <input type="text" asp-for="Name" placeholder="Enter Name">
-            <div class="msg">
-                <span class="err" asp-validation-for="Name"></span>
-            </div> *@
+
 
     <label asp-for="Password"><b>Password</b></label>
    <input  type="password" asp-for="Password" placeholder="Enter Password">
@@ -83,7 +92,13 @@ button {
     }
 
     <button type="submit">Login</button>
-    <a class="text-alert" href="/UserAuthentication/Registration">Not a user? Signup</a>
+            <button type="button" class="btn-signup">
+                <div>
+                    <a class="text-alert btn-signup" href="/UserAuthentication/Registration">Not a user? Signup</a>
+
+                </div>
+                </button>
+    
   </div>
 </form>
 
