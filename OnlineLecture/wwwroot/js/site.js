@@ -148,7 +148,7 @@ var handleLoad = () => {
         xhr.onreadystatechange = () => {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 var posts = JSON.parse(xhr.responseText);
-                var postListHtml = `<table class="table table-striped">
+                var postListHtml = `<table class="table table-striped textTable">
                     <thead class="thead-dark">
                         <tr>
                             <th style="width: 50px">

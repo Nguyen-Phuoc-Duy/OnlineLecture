@@ -29,5 +29,8 @@ namespace OnlineLecture.Models.DTO
 
         [NotMapped]
         public MultiSelectList? MultiSubjectList { get; set; }
+
+        [Required]
+        public DateTime DateTime { get; set; }
     }
 }

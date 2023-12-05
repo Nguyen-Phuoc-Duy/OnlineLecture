@@ -176,7 +176,8 @@ namespace OnlineLecture.Controllers
                     var query = $"select SubjectModel.* " +
                         $"from UserSubjectModel left join SubjectModel " +
                         $"on UserSubjectModel.IdSubject = SubjectModel.IdSubject " +
-                        $"where UserSubjectModel.IdUser = '{user.Id}'";
+                        $"where UserSubjectModel.IdUser = '{user.Id}' " +
+                        $"and SubjectModel.IdSubject is not null";
                     var data = _context.SubjectModel.FromSqlRaw(query).ToList();
                     if (data.IsNullOrEmpty())
                     {

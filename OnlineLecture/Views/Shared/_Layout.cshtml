@@ -26,7 +26,7 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Register Subjects</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="SubjectRegisted">Registed Subjects</a>
@@ -35,13 +35,13 @@
                         {
                            
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="ViewAllUsers">Admin Page</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="ViewAllUsers">Admin Manager</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Subject" asp-action="GetAll">Quản lý môn học</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Subject" asp-action="GetAll">Subjects Manager</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Lecture" asp-action="GetAll">Quản lý bài giảng</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Lecture" asp-action="GetAll">Letures Manager</a>
                             </li>
                         }
                         @if (!string.IsNullOrEmpty(User.Identity.Name))
@@ -76,6 +76,6 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+    @* @await RenderSectionAsync("Scripts", required: false) *@
 </body>
 </html>

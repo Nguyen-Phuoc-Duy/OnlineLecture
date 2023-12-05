@@ -50,3 +50,21 @@ main {
     .overlay.show {
         display: block;
     }
+.none {
+    display: none;
+    
+}
+.borderButon {
+    border-top-right-radius: 4px !important;
+    border-bottom-right-radius: 4px !important;
+    border-top-left-radius: 4px !important;
+    border-bottom-left-radius: 4px !important;
+}
+.btn-title {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5%;
+}
+.textTable {
+    vertical-align: middle;
+}

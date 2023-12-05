@@ -43,7 +43,7 @@ namespace OnlineLecture.Repositories.Implementation
                 {
                     return false;
                 }
-
+                model.DateTime = DateTime.Now;
                 context.LectureModel.Add(model);
                 context.SaveChanges();
                 foreach (int subjectId in model.Subjects)

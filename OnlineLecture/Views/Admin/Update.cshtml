@@ -3,44 +3,34 @@
 @{
 }
 
-<form class="w-40" asp-action="Update" method="post">
-    <h2 class="pb-10">Update User</h2>
-    <input
-    type="hidden"
-    class="input" asp-for="Id">
-
-    @* <div class="input-container">
-        <label asp-for="UserName" class="w-40">UserName</label> *@
-        <input type="hidden" class="input" asp-for="UserName">
-   @*  </div> *@
-    @* <div class="message-box pd-x-28 error">
-        <span asp-validation-for="UserName"> </span>
-    </div> *@
-
-    <div class="input-container">
-        <label asp-for="Name" class="w-40">Name</label>
-        <input type="text" class="input" asp-for="Name">
-    </div>
-    <div class="message-box pd-x-28 error">
-        <span asp-validation-for="Name"> </span>
-    </div>
-
-    <div class="input-container">
-        <label asp-for="Email" class="w-40">Email</label>
-        <input type="text" class="input" asp-for="Email">
-    </div>
-    <div class="message-box pd-x-28 error">
-        <span asp-validation-for="Email"> </span>
-    </div>
-    @if (TempData["msg"] != null)
-    {
-        <div class="alert mb-1">
-            @TempData["msg"]
+<div class="container pt-5">
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Update User</h3>
+            <form asp-action="Update" method="post">
+                <input type="hidden"
+                       class="input" asp-for="Id">
+                <input type="hidden" class="input" asp-for="UserName">
+                <div class="mb-2">
+                    <label asp-for="Name" class="form-label">Name</label>
+                    <input type="text" class="form-control"  asp-for="Name">
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Email" class="form-label">Email</label>
+                    <input type="text" class="form-control"  asp-for="Email">
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                @if (TempData["msg"] != null)
+                {
+                    <div class="mb-3">
+                        @TempData["msg"]
+                    </div>
+                }
+                <button class="btn btn-success" type="submit">Save</button>
+                <a class="btn btn-primary" href="/Admin/Display">All records</a>
+                
+            </form>
         </div>
-    }
-
-    <div class="input-container">
-        <button class="btn btn-default" type="submit">Save</button>
-        <a class="btn btn-sec" href="/Admin/Display">All records</a>
     </div>
-</form>
+</div>
