@@ -257,7 +257,7 @@ var handleLoad = () => {
                 handleDelete();
                 handleUpdate();
             } else if (xhr.readyState === 4) {
-                alert("Failed to get post list.");
+                /*alert("Failed to get post list.");*/
             }
         };
         xhr.send();
@@ -324,7 +324,7 @@ var handleLoadHome = () => {
             postList.innerHTML = postListHtml;
             
         } else if (xhr.readyState === 4) {
-            alert("Failed to get post list.");
+            /*alert("Failed to get post list.");*/
         }
     };
     xhr.send();
@@ -352,7 +352,7 @@ var searchPost = (name) => {
                                 <p class="card-text">${post.nameSubject}</p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
-                                        <a href="" class="btn btn-success">Register the class</a>
+                                        <a href="/Home/AddTheClass?idSubject=${post.idSubject}" asp-for="Home" asp-action="AddTheClass" class="btn btn-success">Register the class</a>
                                     </div>
                                 </div>
                             </div>
@@ -365,7 +365,7 @@ var searchPost = (name) => {
             postList.innerHTML = postListHtml;
             handleDelete();
         } else if (xhr.readyState === 4) {
-            alert("Failed to get post list.");
+           /* alert("Failed to get post list.");*/
         }
     };
     xhr.send();
