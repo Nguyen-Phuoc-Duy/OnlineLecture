@@ -9,6 +9,7 @@ namespace Dotnet6MvcLogin.Controllers
     public class UserAuthenticationController : Controller
     {
         private readonly IUserAuthenticationService _authService;
+        private static int loginAttempts = 0;
         public UserAuthenticationController(IUserAuthenticationService authService)
         {
             this._authService = authService;
