@@ -268,6 +268,7 @@ var handleLoad = () => {
 
 window.onload = () => {
     handleLoad();
+    handleLoadHome();
     handleSearchPost();
 };
 
@@ -280,7 +281,7 @@ var handleSearchPost = () => {
         debounceTimeout = setTimeout(function () {
             const searchTerm = searchInput.value.trim();
             if (searchTerm == "") {
-                handleLoad();
+                handleLoadHome();
             } else {
                 searchPost(searchTerm);
             }
@@ -288,89 +289,79 @@ var handleSearchPost = () => {
     });
 };
 
-var searchPost = (name) => {
+var handleLoadHome = () => {
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", `/Admin/Search?name=${name}`, true);
+    xhr.open("GET", `/Home/IndexSubject`, true);
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.onreadystatechange = () => {
         if (xhr.readyState === 4 && xhr.status === 200) {
             var posts = JSON.parse(xhr.responseText);
-            var postListHtml = `<table class="table table-striped">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th style="width: 50px">
-                               STT
-                            </th>
-                            <th style="width: 350px">
-                               Content
-                            </th>
-                            <th style="width: 250px">
-                               Description
-                            </th>
-                            <th style="width: 300px">
-                                PostImageURL
-                            </th>
-                            <th style="width: 150px">
-                               PostDate
-                            </th>
-                            <th style="width: 200px">
-                               Action
-                            </th>
-                            
-                         </tr>
-                    </thead>
-                    <tbody>
+            var postListHtml = `
+
                   `;
 
             posts.forEach((post, index) => {
                 postListHtml += `
-                        <tr>
-                            <td>
-                               ${index + 1} 
-                            </td>
-                            <td style="text-align:left">
-                               ${post.content} 
-                            </td>
-                            <td style="text-align:left">
-                                ${post.description} 
-                            </td>
-                            <td>
-                                <img style="height:60px;width:80px;" src="/Uploads/${post.postImageURL
-                    }" />
-                            </td>
-                            <td>
-                                ${post.postDate} 
-                            </td>
-                            <td>
-                                <button class="btn btn-update text-lg-right"><i class="bi bi-pencil-square"></i></button> |
-                                <button  data-post-id=${post.postId
-                    }   data-bs-toggle="modal" data-bs-target="#deleteModal" class="btn btn-delete text-lg-right"><i class="bi bi-trash"></i></button>
-                            </td>
-                        </tr>
+                        <div class="col-md-4">
+                        <div class="card mb-4 box-shadow">
+                            <!-- Thiết lập kích thước ảnh là 80x80 và margin là 12px -->
+                            <img class="card-img-top" src="https://png.pngtree.com/png-vector/20230318/ourmid/pngtree-the-books-clipart-vector-png-image_6653533.png" alt="Image default subject" style="width: auto; height: 180px; margin: 12px;" />
 
-
-                        <div class="overlay"></div>
-
-                        <div class="modal" id="deleteModal">
-                            <div class="modal-dialog">
-                              <div class="modal-content">
-                                <div class="modal-header">
-                                  <h4 class="modal-title">Are you sure?</h4>
+                            <div class="card-body">
+                                <p class="card-text">${post.nameSubject}</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <a href="/Home/AddTheClass?idSubject=${post.idSubject}" asp-for="Home" asp-action="AddTheClass" class="btn btn-success">Register the class</a>
+                                    </div>
                                 </div>
-                                <div class="modal-body">
-                                  <p>Do you really want to delete these records? This process cannot be undone.</p>
-                                </div>
-                                <div class="modal-footer">
-                                  <button type="button" class="btn btn-default btn-cancel" data-dismiss="modal">Close</button>
-                                  <button class="btn btn-danger btn-delete-confirm">Delete</button>
-                                </div>
-                              </div>[]
                             </div>
                         </div>
+                    </div>
                     `;
             });
-            postListHtml += "</tbody>" + "</table>";
-            var postList = document.getElementById("result");
+
+            var postList = document.getElementById("result-search");
+            postList.innerHTML = postListHtml;
+            
+        } else if (xhr.readyState === 4) {
+            alert("Failed to get post list.");
+        }
+    };
+    xhr.send();
+};
+
+var searchPost = (name) => {
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", `/Home/IndexSubjectSearch?searchString=${name}`, true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            var posts = JSON.parse(xhr.responseText);
+            var postListHtml = `
+
+                  `;
+
+            posts.forEach((post, index) => {
+                postListHtml += `
+                    <div class="col-md-4">
+                        <div class="card mb-4 box-shadow">
+                            <!-- Thiết lập kích thước ảnh là 80x80 và margin là 12px -->
+                            <img class="card-img-top" src="https://png.pngtree.com/png-vector/20230318/ourmid/pngtree-the-books-clipart-vector-png-image_6653533.png" alt="Image default subject" style="width: auto; height: 180px; margin: 12px;" />
+
+                            <div class="card-body">
+                                <p class="card-text">${post.nameSubject}</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <a href="" class="btn btn-success">Register the class</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    `;
+            });
+            
+            var postList = document.getElementById("result-search");
             postList.innerHTML = postListHtml;
             handleDelete();
         } else if (xhr.readyState === 4) {
