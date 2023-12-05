@@ -65,9 +65,9 @@ namespace Dotnet6MvcLogin.Controllers
         {
             RegistrationModel model = new RegistrationModel
             {
-                Username = "admin9b",
-                Email = "admin9b@gmail.com",
-                Name = "Admin9b",
+                Username = "admin",
+                Email = "admin@gmail.com",
+                Name = "Admin",
                 Password = "Admin@123"
             };
             model.Role = "admin";
